@@ -32,7 +32,7 @@ export const Footer: React.FC = () => {
   ];
 
   return (
-    <footer className="w-full bg-[#FFFFFF] text-[#182319] font-sans-flex border-t border-[#EEEEEE] overflow-x-clip selection:bg-[#E4F766] selection:text-[#182319]">
+    <footer className="w-full bg-[#FFFFFF] text-[#182319] font-sans-flex overflow-x-clip selection:bg-[#E4F766] selection:text-[#182319]">
       <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-10 sm:pt-14 md:pt-16">
         {/* MAIN TWO-COLUMN SPLIT GRID WITH PROPORTIONAL MIN-HEIGHT */}
         <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px] lg:min-h-[540px] xl:min-h-[570px]">

@@ -1,5 +1,6 @@
 import React from 'react';
 import Hero from '../components/Hero';
+import ProductsSection from '../components/ProductsSection';
 import Footer from '../components/Footer';
 
 export const LandingPage: React.FC = () => {
@@ -8,6 +9,9 @@ export const LandingPage: React.FC = () => {
       {/* Hero Section */}
       <Hero />
       
+      {/* Products Display Section (The MORI Ritual) */}
+      <ProductsSection />
+
       {/* Footer Section */}
       <Footer />
     </div>
