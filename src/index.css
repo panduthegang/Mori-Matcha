@@ -12,11 +12,15 @@
 }
 
 .font-sans-flex {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: 'Google Sans Flex', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
 }
 
 .font-outfit {
   font-family: 'Outfit', 'Google Sans Flex', system-ui, -apple-system, sans-serif;
+}
+
+.font-instrument-serif {
+  font-family: 'Instrument Serif', Georgia, serif;
 }
 
 @keyframes marquee {

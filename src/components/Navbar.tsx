@@ -77,13 +77,13 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
 
       {/* 2. MAIN HEADER NAVIGATION (WHITE) */}
-      <header className="w-full bg-[#FFFFFF] px-3 sm:px-4 md:px-5 py-2.5 sm:py-3 flex items-center justify-between z-20">
-        {/* Brand Logo: clover icon + AOSE in #3A5523 */}
+      <header className="w-full bg-[#FFFFFF] px-3.5 sm:px-5 md:px-6 py-2.5 sm:py-3 flex items-center justify-between z-20 gap-3">
+        {/* Brand Logo: clover icon + MORI in #3A5523 */}
         <div 
           onClick={() => handleNavSelect('HOME')} 
-          className="flex items-center gap-2 sm:gap-2.5 cursor-pointer group"
+          className="flex items-center gap-2 sm:gap-2.5 cursor-pointer group shrink-0"
         >
-          <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#3A5523] transition-transform duration-300 group-hover:scale-105">
+          <div className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center text-[#3A5523] transition-transform duration-300 group-hover:scale-105 shrink-0">
             <svg viewBox="0 0 32 32" fill="currentColor" className="w-full h-full">
               <circle cx="11.5" cy="11.5" r="5" />
               <circle cx="20.5" cy="11.5" r="5" />
@@ -92,8 +92,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               <circle cx="16" cy="16" r="3.2" fill="#FFFFFF" />
             </svg>
           </div>
-          <span className="font-sans-flex font-black text-2xl sm:text-[28px] md:text-[30px] tracking-[-0.03em] text-[#3A5523] uppercase leading-none">
-            AOSE
+          <span className="font-sans-flex font-black text-2xl sm:text-[28px] md:text-[30px] tracking-[-0.03em] text-[#3A5523] uppercase leading-none select-none">
+            MORI
           </span>
         </div>
 
@@ -167,10 +167,10 @@ export const Navbar: React.FC<NavbarProps> = ({
         </nav>
 
         {/* Right Action: START YOUR RITUAL & Mobile Menu Button */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             onClick={onStartRitual}
-            className="group relative inline-flex items-center justify-center px-6 sm:px-8 py-2.5 sm:py-3 rounded-full border-[1.5px] border-[#182319] text-xs sm:text-[14px] font-bold tracking-[0.14em] text-[#182319] bg-transparent transition-all duration-300 hover:bg-[#182319] hover:text-[#FFFFFF] cursor-pointer active:scale-95 shadow-xs"
+            className="hidden sm:inline-flex group relative items-center justify-center px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full border-[1.5px] border-[#182319] text-xs sm:text-[13px] md:text-[14px] font-bold tracking-[0.14em] text-[#182319] bg-transparent transition-all duration-300 hover:bg-[#182319] hover:text-[#FFFFFF] cursor-pointer active:scale-95 shadow-xs whitespace-nowrap shrink-0"
           >
             <span>START YOUR RITUAL</span>
           </button>
@@ -178,10 +178,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           {/* Mobile hamburger menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-full border border-[#182319]/25 text-[#182319] hover:bg-black/5"
+            className="md:hidden p-2 rounded-full border border-[#182319]/25 text-[#182319] hover:bg-black/5 active:scale-95 transition-all flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 shrink-0"
             aria-label="Toggle navigation"
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       </header>
@@ -193,7 +193,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden px-6 py-4 bg-[#FFFFFF] border-b border-[#182319]/15 flex flex-col gap-2 z-30"
+            transition={{ duration: 0.22, ease: 'easeInOut' }}
+            className="md:hidden px-4 sm:px-6 py-4 bg-[#FFFFFF] border-b border-[#182319]/15 flex flex-col gap-2 z-30 shadow-md"
           >
             {navItems.map((item) => (
               <button
@@ -202,7 +203,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                   handleNavSelect(item);
                   setMobileMenuOpen(false);
                 }}
-                className={`py-2 px-4 text-left text-xs font-bold tracking-[0.14em] rounded-full transition-colors ${
+                className={`py-2.5 px-4 text-left text-xs font-bold tracking-[0.14em] rounded-full transition-colors ${
                   activeNav === item
                     ? 'bg-[#182319] text-[#FFFFFF]'
                     : 'text-[#182319] hover:bg-black/5'
@@ -211,6 +212,19 @@ export const Navbar: React.FC<NavbarProps> = ({
                 {item}
               </button>
             ))}
+
+            {/* Prominent Mobile CTA */}
+            <div className="pt-2 mt-1 border-t border-[#182319]/10">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  if (onStartRitual) onStartRitual();
+                }}
+                className="w-full py-3 rounded-full bg-[#182319] hover:bg-[#2A3B2B] text-white font-sans-flex font-bold text-xs uppercase tracking-[0.14em] transition-all cursor-pointer active:scale-98 shadow-sm flex items-center justify-center gap-2"
+              >
+                <span>START YOUR RITUAL</span>
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>

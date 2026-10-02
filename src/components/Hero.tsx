@@ -146,7 +146,7 @@ export const Hero: React.FC<HeroProps> = ({ onStartRitual }) => {
               {pillTags.map((name) => (
                 <div
                   key={name}
-                  className="relative w-full inline-flex items-center justify-center px-1.5 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-2.5 lg:py-3 rounded-full border-[1.5px] border-white/90 bg-black/10 font-playfair  text-[14px] xs:text-[15px] sm:text-[14px] md:text-[17px] lg:text-[20px] xl:text-[23px] 2xl:text-[25px] leading-snug shadow-xs select-none"
+                  className="relative w-full inline-flex items-center justify-center px-1.5 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-2.5 lg:py-3 rounded-full border-[1.5px] border-white/90 bg-black/10 font-playfair text-[14px] xs:text-[15px] sm:text-[14px] md:text-[17px] lg:text-[20px] xl:text-[23px] 2xl:text-[25px] leading-snug shadow-xs select-none"
                 >
                   <span className="font-normal text-[#FFFFFF] tracking-tight drop-shadow-[0_1.5px_3px_rgba(0,0,0,0.9)] whitespace-nowrap overflow-visible pb-0.5">
                     {name}
