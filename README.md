@@ -1,0 +1,174 @@
+<div align="center">
+
+  # 🍵 MORI — Pure Matcha Ritual
+
+  **A modern Japanese minimalist editorial web experience designed for steadier energy, calmer focus, and everyday balance.**
+
+  <img src="./public/Thumbnail.png" alt="MORI Matcha — Pure Matcha Ritual" width="100%" style="border-radius: 16px; margin-bottom: 24px;" />
+
+  [![React](https://img.shields.io/badge/React-18.3-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+  [![TypeScript](https://img.shields.io/badge/TypeScript-5.5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+  [![Vite](https://img.shields.io/badge/Vite-5.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+  [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS_v4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+  [![Motion](https://img.shields.io/badge/Motion-13.4-FF4088?style=for-the-badge&logo=framer&logoColor=white)](https://motion.dev/)
+
+</div>
+
+---
+
+## 🌿 Overview
+
+**MORI Matcha** is an editorial web application celebrating the art and mindfulness of traditional Japanese matcha. Crafted with high-fashion typography, organic tactile stickers, fluid butter-smooth physics, and responsive layouts, it transports users into a mindful, premium wellness ritual.
+
+---
+
+## 🎨 Design Philosophy & Aesthetic Style
+
+**Style Definition:** *Modern Japanese Minimalist Editorial / Neo-Brutalist Organic Wellness*
+
+* **Editorial Tea Culture:** Merges classical editorial serif typography with bold modern sans-serif geometric elements and generous negative space.
+* **Warm Organic & Tactile Accents:** Organic scalloped badges, pastel pink stickers, puffy pillows, electric lime arch tabs, and subtle glassmorphic elements.
+* **Liquid Micro-Interactions:** 60fps/120fps hardware-accelerated animations using `motion/react`, custom SVG path morphing, and fluid spring physics.
+
+### 🎨 Color Palette
+
+| Color | Hex Code | Role & Usage |
+| :--- | :--- | :--- |
+| **Deep Forest Black** | `#182319` | Primary typography, high-contrast borders, dark button fills. |
+| **Brand Leaf Green** | `#3A5523` | Main MORI brand clover mark and header logo typography. |
+| **Editorial Forest Green** | `#2F5824` | Active nav indicator stroke, pill button borders, headline accents. |
+| **Deep Button Green** | `#244E1D` | Newsletter submit and interactive button fills (`hover: #1C3E16`). |
+| **Matcha Lime Jade** | `#E4F766` | Scalloped `STEADY ENERGY` badge, arch dome tab, selection highlight. |
+| **Soft Blossom Pink** | `#FEE3EE` / `#FCE5EE` | Top announcement ticker, whisk sticker, puffy pillow sticker, social links. |
+| **Canvas White** | `#FFFFFF` | Background canvas, card containers, hero text, and contrast fills. |
+| **Warm Track Background** | `#FDFBF7` | Branded matcha custom scrollbar track. |
+
+### 🖋️ Typography Stack
+
+* **Playfair Display (`.font-playfair`):** Large editorial headlines (`"matcha"`, `"a small ritual for slower,"`, and the giant anchor `"wellness"`).
+* **Instrument Serif (`.font-instrument-serif italic`):** Poetic italic contrast (`"better days."`, `"made part of every day."`).
+* **Outfit (`.font-outfit`):** Geometric, clean modern taglines and section pitches.
+* **Google Sans Flex / Plus Jakarta Sans (`.font-sans-flex`):** Primary UI, brand logo `"MORI"`, ticker items, navigation pills, and interactive buttons.
+
+---
+
+## ✨ Key Features & Interactive Architecture
+
+### 1. 🧈 Smart Buttery Floating Pill Navbar
+* **Scroll-Down Hide:** Seamlessly slides up out of sight (`y: -100%`) when scrolling down.
+* **Scroll-Up Reveal:** The moment the user scrolls up even a few pixels, **only the white navigation bar** slides down (`y: 0%`) and docks at the top as an elegant floating capsule (`rounded-full border border-[#182319]/15 shadow-md backdrop-blur-md`).
+* **Hero Return:** Returns to its flat edge-to-edge layout below the pink announcement ticker when scrolled back to the top.
+* **Zero Layout Shift:** Maintains an invisible height placeholder in the document flow to ensure zero content jump.
+
+### 2. 🌸 Hero Section
+* Responsive scalloped 12-lobed flower badge (`STEADY ENERGY`) with spring physics and hover tilt.
+* Tactile micro-stickers (pink whisk + lime matcha drop) paired with `MADE FOR EVERYDAY` label.
+* Interactive 3-minute morning ritual modal (`Begin your daily bowl`).
+* Bottom row of 8 responsive ceramic attribute pills (`ceremonial`, `whisked`, `seasonal`, `creamy`, etc.).
+
+### 3. 🍵 Products Display Section (The MORI Ritual)
+* Top fog haze gradient blending into the matcha background image (`Hero-2_ni72bb.png`).
+* Kicker label `THE MORI RITUAL` with 4-petal pink clover.
+* Two-line headline with word-anchored stickers:
+  - Pink wavy pillow sticker (`SIP, DON'T / RUSH`) directly above `small`.
+  - Lime arch dome sticker (`TAKE IT / SLOW`) directly above `slower,`.
+* Standalone reusable **`<ProductCard />`** component rendering the 3 ritual drinks:
+  - **PURE** — Traditional Ceremonial
+  - **CREAMY** — Iced Matcha Latte
+  - **BRIGHT** — Strawberry Matcha
+
+### 4. 📰 Editorial Responsive Footer
+* Two-column split layout with editorial heading (`matcha, made part of every day.`) and embedded pill newsletter form.
+* Circular pink social links (Instagram, TikTok, Pinterest).
+* Giant anchor typography **`wellness`** with metallic gradient (`from-[#0A0A0A] to-[#959A9F]`):
+  - **Desktop (`lg+`):** Spans broadly with the final `s` extending into the right margin.
+  - **Mobile:** Dynamically sized (`24vw`) so the word spans the screen while keeping the `s` cleanly inside the viewport without truncation.
+
+---
+
+## 🛠️ Tech Stack
+
+* **Framework:** [React 18](https://react.dev/) + [Vite](https://vitejs.dev/)
+* **Language:** [TypeScript](https://www.typescriptlang.org/)
+* **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) (`@tailwindcss/vite`) + Vanilla CSS tokens
+* **Animation & Motion:** [Motion (Framer Motion v13)](https://motion.dev/)
+* **Icons:** [Lucide React](https://lucide.dev/)
+* **Routing:** [React Router DOM v7](https://reactrouter.com/)
+
+---
+
+## 📁 Project Structure
+
+```bash
+Mori-Matcha/
+├── public/
+│   ├── Thumbnail.png          # High-resolution project thumbnail
+│   └── Thumbnail.jpg
+├── src/
+│   ├── components/
+│   │   ├── Navbar.tsx         # Smart floating pill navbar with scroll direction physics
+│   │   ├── Hero.tsx           # Full-bleed hero banner, interactive ritual modal, badge
+│   │   ├── ProductsSection.tsx# Ritual section with fog gradient & word-anchored stickers
+│   │   ├── ProductCard.tsx    # Standalone ritual drink card component with hover lift
+│   │   └── Footer.tsx         # Editorial split footer with dynamic 'wellness' display
+│   ├── pages/
+│   │   └── Landing-Page.tsx   # Master page composition
+│   ├── App.tsx                # App root with React Router
+│   ├── index.css              # Tailwind v4 imports, custom fonts, scrollbar styles
+│   └── main.tsx               # DOM entry point
+├── index.html                 # HTML shell with Google Fonts preconnections
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+Ensure you have [Node.js](https://nodejs.org/) (version 18 or higher recommended) and `npm` installed.
+
+### Installation
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/panduthegang/Mori-Matcha.git
+   cd Mori-Matcha
+   ```
+
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+3. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+   Open your browser and navigate to `http://localhost:5173`.
+
+### Build for Production
+
+```bash
+npm run build
+```
+
+The optimized production bundle will be generated in the `dist/` directory.
+
+### Preview Production Build
+
+```bash
+npm run preview
+```
+
+---
+
+## 📄 License
+
+This project is licensed under the [Apache-2.0 License](LICENSE).
+
+<div align="center">
+  <sub>Crafted with calm and steady energy 🍵</sub>
+</div>
