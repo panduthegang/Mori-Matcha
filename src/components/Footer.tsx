@@ -206,10 +206,11 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Giant 'wellness' Display Typography
-                - Container-query responsive sizing so all 8 letters span the width harmoniously
-                - Increased scale so it boldly anchors the space and the final 's' extends slightly past the boundary */}
-            <div className="@container w-full mt-10 sm:mt-12 lg:mt-14 xl:mt-16 select-none">
-              <h1 className="font-playfair font-normal leading-[0.78] tracking-[-0.035em] bg-gradient-to-b from-[#111111] via-[#333333] to-[#8E9398] bg-clip-text text-transparent pb-1 whitespace-nowrap text-[72px] xs:text-[88px] sm:text-[124px] md:text-[152px] lg:text-[164px] xl:text-[195px] 2xl:text-[222px] [font-size:clamp(4.5rem,25.8cqw,14.5rem)] translate-x-0.5 sm:translate-x-1 inline-block">
+                - Mobile: Wide and responsive within screen margins (the final 's' stays cleanly inside)
+                - Desktop (lg+): Broad editorial scale with right bleed matching the original Dribbble mockup
+                - Generous line-height and bottom padding ensure no serifs/descenders are clipped by bg-clip-text */}
+            <div className="relative w-full lg:w-[109%] xl:w-[112%] lg:-mr-12 xl:-mr-16 mt-8 sm:mt-10 lg:mt-12 select-none overflow-visible">
+              <h1 className="font-playfair font-normal leading-[0.88] tracking-[-0.03em] bg-gradient-to-b from-[#0A0A0A] via-[#242424] via-45% to-[#959A9F] bg-clip-text text-transparent pb-5 sm:pb-7 md:pb-9 lg:pb-12 whitespace-nowrap text-[24vw] sm:text-[19vw] md:text-[16vw] lg:text-[185px] xl:text-[222px] 2xl:text-[252px] inline-block pointer-events-none">
                 wellness
               </h1>
             </div>
