@@ -43,7 +43,9 @@
 | **Canvas White** | `#FFFFFF` | Background canvas, card containers, hero text, and contrast fills. |
 | **Warm Track Background** | `#FDFBF7` | Branded matcha custom scrollbar track. |
 
-### 🖋️ Typography Stack
+### 🖋️ Typography Stack (100% Self-Hosted Local Fonts)
+
+All fonts are **100% self-hosted locally** (50 `.woff2` font files in `public/fonts/` defined in `src/fonts.css`), ensuring zero render-blocking Google CDN latency, zero layout shift (FOUT/FOIT), and complete offline readiness.
 
 * **Playfair Display (`.font-playfair`):** Large editorial headlines (`"matcha"`, `"a small ritual for slower,"`, and the giant anchor `"wellness"`).
 * **Instrument Serif (`.font-instrument-serif italic`):** Poetic italic contrast (`"better days."`, `"made part of every day."`).
@@ -102,7 +104,8 @@
 ```bash
 Mori-Matcha/
 ├── public/
-│   ├── Thumbnail.png          # High-resolution project thumbnail
+│   ├── fonts/                 # 50 self-hosted .woff2 font files (zero CDN lag)
+│   ├── Thumbnail.png          # High-resolution project thumbnail (Open Graph / Twitter)
 │   └── Thumbnail.jpg
 ├── src/
 │   ├── components/
@@ -114,9 +117,13 @@ Mori-Matcha/
 │   ├── pages/
 │   │   └── Landing-Page.tsx   # Master page composition
 │   ├── App.tsx                # App root with React Router
+│   ├── fonts.css              # Local @font-face declarations mapping /fonts/...
 │   ├── index.css              # Tailwind v4 imports, custom fonts, scrollbar styles
 │   └── main.tsx               # DOM entry point
-├── index.html                 # HTML shell with Google Fonts preconnections
+├── AGENTS.md                  # Comprehensive AI agent instructions & technical gotchas
+├── DESIGN.md                  # Complete design system, hex colors, & typography rules
+├── MEMORY.md                  # Architectural decisions ledger & component evolution history
+├── index.html                 # HTML shell with Open Graph / Twitter Card social previews
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts
