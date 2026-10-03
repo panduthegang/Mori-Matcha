@@ -33,7 +33,22 @@ export const Footer: React.FC = () => {
 
   return (
     <footer className="w-full bg-[#FFFFFF] text-[#182319] font-sans-flex overflow-x-clip selection:bg-[#E4F766] selection:text-[#182319]">
-      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-10 sm:pt-14 md:pt-16">
+      {/* SAKURA MATCHA EDITORIAL BANNER
+          - Matches exact border radius as Hero, Products, and Everyday Wellness sections
+          - Consistent white framing margins: px-2 sm:px-3 md:px-4
+          - High-resolution editorial ritual image: chasen whisk, ceremonial matcha & blooming sakura */}
+      <div className="w-full px-2 sm:px-3 md:px-4 pt-2 sm:pt-3 pb-2 sm:pb-4">
+        <div className="relative w-full h-[220px] xs:h-[270px] sm:h-[350px] md:h-[430px] lg:h-[490px] xl:h-[550px] rounded-xl sm:rounded-2xl md:rounded-[20px] overflow-hidden shadow-sm select-none bg-[#E7F3FB]">
+          <img
+            src="https://res.cloudinary.com/dkev7ein3/image/upload/v1791040482/Footer_vgqmsa.png"
+            alt="Artisanal matcha bowl with bamboo chasen whisk surrounded by blooming pink sakura cherry blossoms"
+            className="w-full h-full object-cover object-center"
+            loading="lazy"
+          />
+        </div>
+      </div>
+
+      <div className="w-full max-w-[1600px] mx-auto px-4 sm:px-6 md:px-10 lg:px-14 xl:px-16 pt-6 sm:pt-8 md:pt-10">
         {/* MAIN TWO-COLUMN SPLIT GRID WITH PROPORTIONAL MIN-HEIGHT */}
         <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[500px] lg:min-h-[540px] xl:min-h-[570px]">
           {/* =========================================

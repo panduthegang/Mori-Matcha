@@ -40,8 +40,6 @@ const carouselSlides: CarouselSlideItem[] = [
 export const EverydayWellnessSection: React.FC = () => {
   const [hoveredCardId, setHoveredCardId] = useState<string>('morning');
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [touchStartX, setTouchStartX] = useState<number | null>(null);
-  const [touchEndX, setTouchEndX] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -57,27 +55,6 @@ export const EverydayWellnessSection: React.FC = () => {
 
   const handleNext = () => {
     setCurrentSlide((prev) => (prev === carouselSlides.length - 1 ? 0 : prev + 1));
-  };
-
-  // Native mobile touch swipe handlers
-  const handleTouchStart = (e: React.TouchEvent) => {
-    setTouchEndX(null);
-    setTouchStartX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchMove = (e: React.TouchEvent) => {
-    setTouchEndX(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = () => {
-    if (!touchStartX || !touchEndX) return;
-    const distance = touchStartX - touchEndX;
-    const minSwipeDistance = 35;
-    if (distance > minSwipeDistance) {
-      handleNext();
-    } else if (distance < -minSwipeDistance) {
-      handlePrev();
-    }
   };
 
   const benefitCards: BenefitCardItem[] = [
@@ -320,14 +297,9 @@ export const EverydayWellnessSection: React.FC = () => {
             </div>
           </div>
 
-          {/* RIGHT: Media Showcase Carousel with mobile touch swipe & peek effect */}
+          {/* RIGHT: Media Showcase Carousel with buttery smooth pan/swipe */}
           <div className="lg:col-span-7 xl:col-span-7 flex flex-col justify-end overflow-hidden">
-            <div
-              className="relative w-full h-[400px] sm:h-[450px] md:h-[490px] lg:h-[520px] xl:h-[540px] rounded-[24px] sm:rounded-[28px] md:rounded-[34px] overflow-hidden touch-pan-y"
-              onTouchStart={handleTouchStart}
-              onTouchMove={handleTouchMove}
-              onTouchEnd={handleTouchEnd}
-            >
+            <div className="relative w-full h-[400px] sm:h-[450px] md:h-[490px] lg:h-[520px] xl:h-[540px] rounded-[24px] sm:rounded-[28px] md:rounded-[34px] overflow-hidden touch-pan-y">
               <motion.div
                 className="flex h-full gap-3.5 sm:gap-5 md:gap-6 cursor-grab active:cursor-grabbing select-none"
                 animate={{
@@ -336,17 +308,16 @@ export const EverydayWellnessSection: React.FC = () => {
                     : `calc(-${currentSlide} * (64% + 20px))`,
                 }}
                 transition={{
-                  type: 'spring',
-                  stiffness: 240,
-                  damping: 28,
-                  mass: 0.9,
+                  duration: 0.65,
+                  ease: [0.16, 1, 0.3, 1],
                 }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.2}
-                onDragEnd={(_, info) => {
-                  if (info.offset.x < -35) handleNext();
-                  else if (info.offset.x > 35) handlePrev();
+                onPanEnd={(_, info) => {
+                  const swipeThreshold = 35;
+                  if (info.offset.x < -swipeThreshold) {
+                    handleNext();
+                  } else if (info.offset.x > swipeThreshold) {
+                    handlePrev();
+                  }
                 }}
               >
                 {carouselSlides.map((slide, index) => {
