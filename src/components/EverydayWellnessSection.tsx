@@ -1,8 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
+interface BenefitCardItem {
+  id: string;
+  title: string;
+  description: string;
+  renderIcon: (isActive: boolean) => React.ReactNode;
+}
+
 export const EverydayWellnessSection: React.FC = () => {
+  const [activeCardId, setActiveCardId] = useState<string>('morning');
+
+  const benefitCards: BenefitCardItem[] = [
+    {
+      id: 'morning',
+      title: 'MORNING ENERGY',
+      description: 'A smoother lift to start your day.',
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5 sm:w-6 sm:h-6">
+          <path d="M8 3v3" />
+          <path d="M12 2v4" />
+          <path d="M16 3v3" />
+          <path d="M4 11h16a1 1 0 0 1 1 1c0 5-3.5 9-9 9s-9-4-9-9a1 1 0 0 1 1-1Z" />
+          <path d="M8 21h8" strokeWidth="2.2" />
+        </svg>
+      ),
+    },
+    {
+      id: 'midday',
+      title: 'MIDDAY RESET',
+      description: 'A refreshing pause to recharge.',
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5 sm:w-6 sm:h-6">
+          <path d="M4 11h13a1 1 0 0 1 1 1c0 4.5-3 8-7.5 8S3 16.5 3 12a1 1 0 0 1 1-1Z" />
+          <path d="M18 12h2a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2h-2" />
+          <path d="M8.5 3a4.5 4.5 0 0 1 6.5 2" />
+          <polyline points="15 2 15 5 12 5" />
+        </svg>
+      ),
+    },
+    {
+      id: 'calm',
+      title: 'CALM FOCUS',
+      description: 'Clearer focus, without the rush.',
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5 sm:w-6 sm:h-6">
+          <path d="M12 2c1 1.5 2 2.5 2 4a2 2 0 0 1-4 0c0-1.5 1-2.5 2-4Z" />
+          <path d="M4 11h16a1 1 0 0 1 1 1c0 5-3.5 9-9 9s-9-4-9-9a1 1 0 0 1 1-1Z" />
+          <path d="M8 21h8" strokeWidth="2.2" />
+        </svg>
+      ),
+    },
+    {
+      id: 'balance',
+      title: 'DAILY BALANCE',
+      description: 'An easy ritual to come back to.',
+      renderIcon: () => (
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5.5 h-5.5 sm:w-6 sm:h-6">
+          <path d="M12 3v4" />
+          <path d="M10 5l2-2 2 2" />
+          <circle cx="6.5" cy="5" r="1" fill="currentColor" />
+          <circle cx="17.5" cy="5" r="1" fill="currentColor" />
+          <path d="M4 11h16a1 1 0 0 1 1 1c0 5-3.5 9-9 9s-9-4-9-9a1 1 0 0 1 1-1Z" />
+          <path d="M8 21h8" strokeWidth="2.2" />
+        </svg>
+      ),
+    },
+  ];
+
   return (
     <section className="w-full px-2 sm:px-3 md:px-4 pt-2 sm:pt-3 pb-2.5 sm:pb-3 flex flex-col bg-[#FFFFFF]">
       {/* SECTION CARD CONTAINER
@@ -123,23 +189,69 @@ export const EverydayWellnessSection: React.FC = () => {
         </div>
 
         {/* ==============================================================
-            LOWER CONTENT GRID (Phase 2 & Phase 3 Scaffold)
-            - Left: 2x2 Wellness Benefit Cards
-            - Right: Media Showcase Carousel Card
+            LOWER CONTENT GRID
+            - Left: 2x2 Wellness Benefit Cards (Interactive Active State)
+            - Right: Media Showcase Carousel Card (Phase 3 Scaffold)
            ============================================================== */}
         <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch pt-2">
-          {/* LEFT 5/12 or 6/12: Benefit Cards Slot (Phase 2) */}
+          {/* LEFT: 2x2 Wellness Benefit Cards */}
           <div className="lg:col-span-6 xl:col-span-5 flex flex-col justify-center">
-            {/* Visual scaffold indicator for Phase 1 */}
-            <div className="border border-dashed border-white/20 rounded-2xl p-6 sm:p-8 flex items-center justify-center text-white/50 text-xs uppercase tracking-widest font-sans-flex">
-              Phase 2: 2x2 Interactive Benefit Cards
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-4.5">
+              {benefitCards.map((card) => {
+                const isActive = activeCardId === card.id;
+
+                return (
+                  <motion.button
+                    key={card.id}
+                    type="button"
+                    onClick={() => setActiveCardId(card.id)}
+                    whileHover={{ y: -3 }}
+                    whileTap={{ scale: 0.98 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    className={`relative text-left p-4 sm:p-5 md:p-6 rounded-[18px] sm:rounded-[22px] md:rounded-[24px] transition-all duration-300 cursor-pointer select-none flex flex-col justify-between min-h-[150px] sm:min-h-[170px] md:min-h-[185px] ${
+                      isActive
+                        ? 'bg-[#FFFFFF] text-[#182319] shadow-xl shadow-black/25 border-transparent'
+                        : 'bg-[#15341A]/50 hover:bg-[#15341A]/75 text-white backdrop-blur-md border border-white/10'
+                    }`}
+                  >
+                    {/* Top: Icon Badge */}
+                    <div
+                      className={`w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors duration-300 mb-3 sm:mb-4 md:mb-5 ${
+                        isActive
+                          ? 'bg-[#FCE5EE] text-[#2F5824]'
+                          : 'bg-white/10 text-white/90'
+                      }`}
+                    >
+                      {card.renderIcon(isActive)}
+                    </div>
+
+                    {/* Bottom: Title & Description */}
+                    <div>
+                      <h3
+                        className={`font-sans-flex font-bold text-[13px] sm:text-[14px] md:text-[14.5px] uppercase tracking-[0.08em] transition-colors duration-300 mb-1 sm:mb-1.5 ${
+                          isActive ? 'text-[#182319]' : 'text-white/95'
+                        }`}
+                      >
+                        {card.title}
+                      </h3>
+                      <p
+                        className={`font-sans-flex text-[12px] sm:text-[12.5px] md:text-[13px] font-normal leading-snug transition-colors duration-300 ${
+                          isActive ? 'text-[#555555]' : 'text-white/65'
+                        }`}
+                      >
+                        {card.description}
+                      </p>
+                    </div>
+                  </motion.button>
+                );
+              })}
             </div>
           </div>
 
-          {/* RIGHT 7/12 or 6/12: Media Showcase Carousel Slot (Phase 3) */}
+          {/* RIGHT 7/12 or 6/12: Media Showcase Carousel Slot (Phase 3 Scaffold) */}
           <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center">
-            {/* Visual scaffold indicator for Phase 1 */}
-            <div className="border border-dashed border-white/20 rounded-2xl p-6 sm:p-8 flex items-center justify-center text-white/50 text-xs uppercase tracking-widest font-sans-flex">
+            {/* Visual scaffold indicator for Phase 3 */}
+            <div className="border border-dashed border-white/20 rounded-[24px] sm:rounded-[28px] p-8 sm:p-12 min-h-[340px] sm:min-h-[380px] md:min-h-[420px] flex items-center justify-center text-white/50 text-xs uppercase tracking-widest font-sans-flex bg-white/5 backdrop-blur-xs">
               Phase 3: Visual Media Carousel
             </div>
           </div>
