@@ -234,11 +234,11 @@ export const Navbar: React.FC<NavbarProps> = ({
             {/* Right Action: START YOUR RITUAL & Mobile Menu Button */}
             <div className="flex items-center gap-2 sm:gap-3">
               <button
-                onClick={onStartRitual}
-                className="hidden sm:inline-flex group relative items-center justify-center px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full border-[1.5px] border-[#182319] text-xs sm:text-[13px] md:text-[14px] font-bold tracking-[0.14em] text-[#182319] bg-transparent transition-all duration-300 hover:bg-[#182319] hover:text-[#FFFFFF] cursor-pointer active:scale-95 shadow-xs whitespace-nowrap shrink-0"
-              >
-                <span>START YOUR RITUAL</span>
-              </button>
+  onClick={onStartRitual}
+  className="hidden sm:inline-flex group relative items-center justify-center px-5 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 rounded-full border-[1.5px] border-[#2F5824]/80 text-xs sm:text-[13px] md:text-[14px] font-bold tracking-[0.14em] text-[#2F5824] bg-transparent transition-all duration-300 hover:bg-[#2F5824] hover:text-white cursor-pointer active:scale-95 shadow-xs whitespace-nowrap shrink-0"
+>
+  <span>START YOUR RITUAL</span>
+</button>
 
               {/* Mobile hamburger menu toggle */}
               <button

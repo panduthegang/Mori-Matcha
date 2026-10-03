@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'motion/react';
+import ProductCard from './ProductCard';
 
 export const ProductsSection: React.FC = () => {
   return (
@@ -118,10 +119,41 @@ export const ProductsSection: React.FC = () => {
           </div>
         </div>
 
-        {/* CARDS CONTAINER PLACEHOLDER
-            - Reserved area ready for the 3 product ritual cards (Pure, Creamy, Bright) */}
-        <div className="w-full max-w-5xl mx-auto mt-12 sm:mt-16 flex-1 flex items-center justify-center">
-          {/* Cards will be added here in the next step */}
+        {/* 3 PRODUCT RITUAL CARDS (PURE, CREAMY, BRIGHT) */}
+        <div className="w-full max-w-[1140px] mx-auto mt-10 sm:mt-14 md:mt-16 z-10 px-2 sm:px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 lg:gap-7 items-stretch">
+            {[
+              {
+                id: 'pure',
+                title: 'PURE',
+                subtitle: 'Traditional Ceremonial',
+                image: 'https://res.cloudinary.com/dkev7ein3/image/upload/v1790232094/Product-1_ydvgja.png',
+                alt: 'Pure Traditional Ceremonial Matcha',
+              },
+              {
+                id: 'creamy',
+                title: 'CREAMY',
+                subtitle: 'Iced Matcha Latte',
+                image: 'https://res.cloudinary.com/dkev7ein3/image/upload/v1790232094/Product-2_uwzcvv.png',
+                alt: 'Creamy Iced Matcha Latte',
+              },
+              {
+                id: 'bright',
+                title: 'BRIGHT',
+                subtitle: 'Strawberry Matcha',
+                image: 'https://res.cloudinary.com/dkev7ein3/image/upload/v1790232101/Product-3_zj2kla.png',
+                alt: 'Bright Strawberry Matcha Drink',
+              },
+            ].map((product) => (
+              <ProductCard
+                key={product.id}
+                title={product.title}
+                subtitle={product.subtitle}
+                image={product.image}
+                alt={product.alt}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>
