@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 
@@ -9,8 +9,76 @@ interface BenefitCardItem {
   renderIcon: (isActive: boolean) => React.ReactNode;
 }
 
+interface CarouselSlideItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+}
+
+const carouselSlides: CarouselSlideItem[] = [
+  {
+    id: 'whisk',
+    title: 'Ceremonial Whisking',
+    subtitle: 'Bamboo chasen frothing vibrant green matcha',
+    imageUrl: 'https://res.cloudinary.com/dkev7ein3/image/upload/v1791039730/Whisk-1_fimcde.png',
+  },
+  {
+    id: 'iced',
+    title: 'Pure Iced Matcha',
+    subtitle: 'Refreshing clarity over crystal ice cubes',
+    imageUrl: 'https://res.cloudinary.com/dkev7ein3/image/upload/v1791039731/Ice_Matcha_wyv5qa.png',
+  },
+  {
+    id: 'latte',
+    title: 'Silky Matcha Latte',
+    subtitle: 'Velvety botanical calm for mindful pauses',
+    imageUrl: 'https://res.cloudinary.com/dkev7ein3/image/upload/v1791039732/Matcha_Latte_ziffdm.png',
+  },
+];
+
 export const EverydayWellnessSection: React.FC = () => {
-  const [activeCardId, setActiveCardId] = useState<string>('morning');
+  const [hoveredCardId, setHoveredCardId] = useState<string>('morning');
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchEndX, setTouchEndX] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  const handlePrev = () => {
+    setCurrentSlide((prev) => (prev === 0 ? carouselSlides.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentSlide((prev) => (prev === carouselSlides.length - 1 ? 0 : prev + 1));
+  };
+
+  // Native mobile touch swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEndX(null);
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEndX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX || !touchEndX) return;
+    const distance = touchStartX - touchEndX;
+    const minSwipeDistance = 35;
+    if (distance > minSwipeDistance) {
+      handleNext();
+    } else if (distance < -minSwipeDistance) {
+      handlePrev();
+    }
+  };
 
   const benefitCards: BenefitCardItem[] = [
     {
@@ -76,7 +144,7 @@ export const EverydayWellnessSection: React.FC = () => {
           - Natural white gap between sections is created by the outer padding
           - High-contrast green grid background image with deep forest green canvas */}
       <div
-        className="relative w-full rounded-xl sm:rounded-2xl md:rounded-[20px] overflow-hidden flex flex-col justify-between p-6 sm:p-8 md:p-12 lg:p-14 bg-cover bg-center select-none"
+        className="relative w-full rounded-xl sm:rounded-2xl md:rounded-[20px] overflow-hidden flex flex-col justify-between p-5 sm:p-7 md:p-9 lg:p-10 pb-6 sm:pb-8 md:pb-10 bg-cover bg-center select-none"
         style={{
           backgroundImage: `url('https://res.cloudinary.com/dkev7ein3/image/upload/v1791038905/Green_Grid_doxpoc.png')`,
           backgroundColor: '#0D2411',
@@ -90,7 +158,7 @@ export const EverydayWellnessSection: React.FC = () => {
             - Left: Kicker + Two-line Editorial Title + Word-Anchored Stickers + Subtitle
             - Right: Frosted Circular Carousel Navigation Arrows (← / →)
            ============================================================== */}
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 sm:gap-8 pb-8 sm:pb-12 md:pb-14">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-5 sm:gap-7 pb-5 sm:pb-7 md:pb-8">
           {/* LEFT: Kicker, Heading, Stickers, Paragraph */}
           <div className="max-w-2xl flex flex-col">
             {/* KICKER: Same 4-petal clover logo as THE MORI RITUAL + matching 18px font size */}
@@ -169,21 +237,23 @@ export const EverydayWellnessSection: React.FC = () => {
             </p>
           </div>
 
-          {/* RIGHT: Frosted Circular Carousel Navigation Arrows (← / →) */}
-          <div className="flex items-center gap-3 sm:gap-3.5 shrink-0 pt-2 lg:pt-4">
+          {/* RIGHT: Large Circular Carousel Navigation Arrows (← / →) matching design */}
+          <div className="flex items-center gap-3.5 sm:gap-4 shrink-0 pt-1 lg:pt-3">
             <button
               type="button"
+              onClick={handlePrev}
               aria-label="Previous wellness highlight"
-              className="w-11 h-11 sm:w-12 sm:h-12 md:w-13 md:h-13 rounded-full bg-white/10 hover:bg-white/20 active:scale-95 transition-all duration-200 border border-white/15 flex items-center justify-center text-white backdrop-blur-md shadow-md cursor-pointer group"
+              className="w-13 h-13 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-full bg-[#526853]/85 hover:bg-[#526853] active:scale-95 transition-all duration-200 flex items-center justify-center text-white backdrop-blur-md shadow-lg shadow-black/25 cursor-pointer group"
             >
-              <ArrowLeft className="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-200 group-hover:-translate-x-0.5" />
+              <ArrowLeft className="w-5.5 h-5.5 sm:w-6.5 sm:h-6.5 md:w-7 md:h-7 transition-transform duration-200 group-hover:-translate-x-1" strokeWidth={2.2} />
             </button>
             <button
               type="button"
+              onClick={handleNext}
               aria-label="Next wellness highlight"
-              className="w-11 h-11 sm:w-12 sm:h-12 md:w-13 md:h-13 rounded-full bg-white/20 hover:bg-white/30 active:scale-95 transition-all duration-200 border border-white/25 flex items-center justify-center text-white backdrop-blur-md shadow-md cursor-pointer group"
+              className="w-13 h-13 sm:w-16 sm:h-16 md:w-[68px] md:h-[68px] rounded-full bg-[#95A596] hover:bg-[#A3B4A4] active:scale-95 transition-all duration-200 flex items-center justify-center text-[#182319] backdrop-blur-md shadow-lg shadow-black/25 cursor-pointer group"
             >
-              <ArrowRight className="w-5 h-5 sm:w-5.5 sm:h-5.5 transition-transform duration-200 group-hover:translate-x-0.5" />
+              <ArrowRight className="w-5.5 h-5.5 sm:w-6.5 sm:h-6.5 md:w-7 md:h-7 transition-transform duration-200 group-hover:translate-x-1" strokeWidth={2.2} />
             </button>
           </div>
         </div>
@@ -191,68 +261,120 @@ export const EverydayWellnessSection: React.FC = () => {
         {/* ==============================================================
             LOWER CONTENT GRID
             - Left: 2x2 Wellness Benefit Cards (Interactive Active State)
-            - Right: Media Showcase Carousel Card (Phase 3 Scaffold)
+            - Right: Media Showcase Carousel Card (Tall Long Portrait Cards)
            ============================================================== */}
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-stretch pt-2">
+        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 items-end pt-2 sm:pt-4">
           {/* LEFT: 2x2 Wellness Benefit Cards */}
-          <div className="lg:col-span-6 xl:col-span-5 flex flex-col justify-center">
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-4.5">
+          <div className="lg:col-span-5 xl:col-span-5 flex flex-col justify-end">
+            <div
+              className="grid grid-cols-2 gap-3 sm:gap-4 md:gap-4.5"
+              onMouseLeave={() => setHoveredCardId('morning')}
+            >
               {benefitCards.map((card) => {
-                const isActive = activeCardId === card.id;
+                const isHovered = hoveredCardId === card.id;
 
                 return (
-                  <motion.button
+                  <motion.div
                     key={card.id}
-                    type="button"
-                    onClick={() => setActiveCardId(card.id)}
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.98 }}
-                    transition={{ type: 'spring', stiffness: 400, damping: 25 }}
-                    className={`relative text-left p-4 sm:p-5 md:p-6 rounded-[18px] sm:rounded-[22px] md:rounded-[24px] transition-all duration-300 cursor-pointer select-none flex flex-col justify-between min-h-[150px] sm:min-h-[170px] md:min-h-[185px] ${
-                      isActive
-                        ? 'bg-[#FFFFFF] text-[#182319] shadow-xl shadow-black/25 border-transparent'
-                        : 'bg-[#15341A]/50 hover:bg-[#15341A]/75 text-white backdrop-blur-md border border-white/10'
+                    onMouseEnter={() => setHoveredCardId(card.id)}
+                    onClick={() => setHoveredCardId(card.id)}
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    className={`relative text-left p-4 sm:p-4.5 md:p-5 rounded-[18px] sm:rounded-[22px] md:rounded-[24px] transition-all duration-300 ease-out cursor-pointer select-none flex flex-col justify-between min-h-[145px] sm:min-h-[160px] md:min-h-[175px] ${
+                      isHovered
+                        ? 'bg-[#FFFFFF] text-[#182319] shadow-[0_16px_40px_rgba(0,0,0,0.28)] border-transparent'
+                        : 'bg-[#15341A]/50 hover:bg-[#15341A]/75 text-white backdrop-blur-md border border-white/10 shadow-none'
                     }`}
                   >
                     {/* Top: Icon Badge */}
                     <div
-                      className={`w-10 h-10 sm:w-11 sm:h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-colors duration-300 mb-3 sm:mb-4 md:mb-5 ${
-                        isActive
+                      className={`w-11 h-11 sm:w-12 sm:h-12 md:w-13 md:h-13 rounded-full flex items-center justify-center transition-colors duration-300 ease-out mb-3 sm:mb-4 md:mb-5 ${
+                        isHovered
                           ? 'bg-[#FCE5EE] text-[#2F5824]'
                           : 'bg-white/10 text-white/90'
                       }`}
                     >
-                      {card.renderIcon(isActive)}
+                      {card.renderIcon(isHovered)}
                     </div>
 
                     {/* Bottom: Title & Description */}
                     <div>
                       <h3
-                        className={`font-sans-flex font-bold text-[13px] sm:text-[14px] md:text-[14.5px] uppercase tracking-[0.08em] transition-colors duration-300 mb-1 sm:mb-1.5 ${
-                          isActive ? 'text-[#182319]' : 'text-white/95'
+                        className={`font-sans-flex font-bold text-[13px] sm:text-[14px] md:text-[14.5px] uppercase tracking-[0.08em] transition-colors duration-300 ease-out mb-1 sm:mb-1.5 ${
+                          isHovered ? 'text-[#182319]' : 'text-white/95'
                         }`}
                       >
                         {card.title}
                       </h3>
                       <p
-                        className={`font-sans-flex text-[12px] sm:text-[12.5px] md:text-[13px] font-normal leading-snug transition-colors duration-300 ${
-                          isActive ? 'text-[#555555]' : 'text-white/65'
+                        className={`font-sans-flex text-[12px] sm:text-[12.5px] md:text-[13px] font-normal leading-snug transition-colors duration-300 ease-out ${
+                          isHovered ? 'text-[#555555]' : 'text-white/65'
                         }`}
                       >
                         {card.description}
                       </p>
                     </div>
-                  </motion.button>
+                  </motion.div>
                 );
               })}
             </div>
           </div>
 
-          {/* RIGHT 7/12 or 6/12: Media Showcase Carousel Slot (Phase 3 Scaffold) */}
-          <div className="lg:col-span-6 xl:col-span-7 flex flex-col justify-center">
-            {/* Visual scaffold indicator for Phase 3 */}
-            <div className="border border-dashed border-white/20 rounded-[24px] sm:rounded-[28px] p-8 sm:p-12 min-h-[340px] sm:min-h-[380px] md:min-h-[420px] flex items-center justify-center text-white/50 text-xs uppercase tracking-widest font-sans-flex bg-white/5 backdrop-blur-xs">
-              Phase 3: Visual Media Carousel
+          {/* RIGHT: Media Showcase Carousel with mobile touch swipe & peek effect */}
+          <div className="lg:col-span-7 xl:col-span-7 flex flex-col justify-end overflow-hidden">
+            <div
+              className="relative w-full h-[400px] sm:h-[450px] md:h-[490px] lg:h-[520px] xl:h-[540px] rounded-[24px] sm:rounded-[28px] md:rounded-[34px] overflow-hidden touch-pan-y"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              <motion.div
+                className="flex h-full gap-3.5 sm:gap-5 md:gap-6 cursor-grab active:cursor-grabbing select-none"
+                animate={{
+                  x: isMobile
+                    ? `calc(-${currentSlide} * (84% + 14px))`
+                    : `calc(-${currentSlide} * (64% + 20px))`,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 240,
+                  damping: 28,
+                  mass: 0.9,
+                }}
+                drag="x"
+                dragConstraints={{ left: 0, right: 0 }}
+                dragElastic={0.2}
+                onDragEnd={(_, info) => {
+                  if (info.offset.x < -35) handleNext();
+                  else if (info.offset.x > 35) handlePrev();
+                }}
+              >
+                {carouselSlides.map((slide, index) => {
+                  const isCurrent = currentSlide === index;
+
+                  return (
+                    <div
+                      key={slide.id}
+                      onClick={() => setCurrentSlide(index)}
+                      className={`relative w-[84%] sm:w-[74%] md:w-[68%] lg:w-[64%] h-full shrink-0 rounded-[24px] sm:rounded-[28px] md:rounded-[34px] overflow-hidden transition-all duration-500 cursor-pointer shadow-2xl shadow-black/50 group touch-pan-y ${
+                        isCurrent
+                          ? 'opacity-100 ring-2 ring-white/20'
+                          : 'opacity-70 hover:opacity-90'
+                      }`}
+                    >
+                      <img
+                        src={slide.imageUrl}
+                        alt={slide.title}
+                        className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 pointer-events-none"
+                        loading="lazy"
+                        draggable={false}
+                      />
+                      {/* Subtle bottom shadow vignette */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A1B0D]/50 via-transparent to-transparent pointer-events-none" />
+                    </div>
+                  );
+                })}
+              </motion.div>
             </div>
           </div>
         </div>
