@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 
 interface RitualStepItem {
   number: number;
@@ -41,7 +41,7 @@ const RITUAL_STEPS: RitualStepItem[] = [
 ];
 
 export const RitualStepsSection: React.FC = () => {
-  const [activeStep, setActiveStep] = useState<number>(3);
+  const [hoveredStep, setHoveredStep] = useState<number | null>(null);
 
   return (
     <section className="w-full px-2 sm:px-3 md:px-4 pt-12 sm:pt-16 md:pt-20 pb-12 sm:pb-16 md:pb-20 flex flex-col bg-[#FFFFFF] overflow-x-clip select-none">
@@ -57,9 +57,9 @@ export const RitualStepsSection: React.FC = () => {
           <div className="w-5 h-5 text-[#F494BE] flex items-center justify-center shrink-0">
             <svg viewBox="0 0 32 32" fill="currentColor" className="w-full h-full">
               <circle cx="11.5" cy="11.5" r="5" />
-              <circle cx="20.5" cy="11.5" r="5" />
-              <circle cx="11.5" cy="20.5" r="5" />
               <circle cx="20.5" cy="20.5" r="5" />
+              <circle cx="11.5" cy="20.5" r="5" />
+              <circle cx="20.5" cy="11.5" r="5" />
               <circle cx="16" cy="16" r="3.2" fill="#FFFFFF" />
             </svg>
           </div>
@@ -159,83 +159,99 @@ export const RitualStepsSection: React.FC = () => {
 
       {/* ==============================================================
           INTERACTIVE RITUAL STEPS ACCORDION LIST
-          - Inactive: Circular step badge + giant Playfair word with hover lift
-          - Active: Full-width expanded image banner (rounded-xl sm:rounded-2xl md:rounded-[20px])
+          - Full-width matching Hero, Everyday Wellness & Footer banner (px-2 sm:px-3 md:px-4)
+          - Sleek panoramic height matching OG design
+          - Hover-activated: hovering any step expands its image banner & changes font to italic
+          - Auto-collapse on cursor leave: collapses cleanly when mouse leaves the section
+          - Inactive: centered circular step badge + giant Playfair metallic gradient word with full descenders
          ============================================================== */}
-      <div className="w-full max-w-5xl mx-auto mt-12 sm:mt-16 md:mt-20 flex flex-col items-center gap-6 sm:gap-8 md:gap-10">
+      <div
+        onMouseLeave={() => setHoveredStep(null)}
+        className="w-full mt-8 sm:mt-11 md:mt-13 flex flex-col items-center gap-3 sm:gap-4 md:gap-4.5"
+      >
         {RITUAL_STEPS.map((step) => {
-          const isActive = activeStep === step.number;
+          const isActive = hoveredStep === step.number;
 
-          if (isActive) {
-            {/* ACTIVE STEP: Expanded Full-Width Banner Card with 3:1 aspect ratio matching 2172x724 */}
-            return (
-              <motion.div
-                key={step.number}
-                layout
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-                className="relative w-full aspect-[2.6/1] sm:aspect-[3/1] min-h-[220px] sm:min-h-[270px] md:min-h-[310px] lg:min-h-[340px] rounded-xl sm:rounded-2xl md:rounded-[20px] overflow-hidden shadow-xl shadow-black/15 flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 text-center cursor-pointer select-none bg-[#FCE5EE]"
-                onClick={() => setActiveStep(step.number)}
-              >
-                {/* 2172x724 High-Resolution Ritual Image */}
-                <img
-                  src={step.imageUrl}
-                  alt={`Step ${step.number}: ${step.word}`}
-                  className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none"
-                  loading="lazy"
-                />
+          return (
+            <motion.div
+              key={step.number}
+              layout
+              transition={{
+                layout: { duration: 0.55, ease: [0.16, 1, 0.3, 1] },
+              }}
+              onMouseEnter={() => setHoveredStep(step.number)}
+              onClick={() => setHoveredStep(hoveredStep === step.number ? null : step.number)}
+              className="w-full flex flex-col items-center justify-center cursor-pointer select-none"
+            >
+              {isActive ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.985 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.985 }}
+                  transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+                  className="relative w-full h-[175px] xs:h-[200px] sm:h-[230px] md:h-[255px] lg:h-[275px] xl:h-[290px] rounded-xl sm:rounded-2xl md:rounded-[20px] overflow-hidden shadow-lg shadow-black/10 flex flex-col items-center justify-center p-3 sm:p-4 md:p-6 text-center select-none bg-[#FCE5EE] my-1 sm:my-1.5 transform-gpu"
+                >
+                  {/* High-Resolution Ritual Image with subtle cinematic zoom */}
+                  <motion.img
+                    initial={{ scale: 1.05, opacity: 0.85 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+                    src={step.imageUrl}
+                    alt={`Step ${step.number}: ${step.word}`}
+                    className="absolute inset-0 w-full h-full object-cover object-center pointer-events-none transform-gpu"
+                    loading="lazy"
+                  />
 
-                {/* Subtle contrast overlay to guarantee white typography readability */}
-                <div className="absolute inset-0 bg-black/12 pointer-events-none" />
+                  {/* Gentle contrast overlay to guarantee white typography readability */}
+                  <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
-                {/* Step Content */}
-                <div className="relative z-10 flex flex-col items-center max-w-2xl px-4">
-                  {/* Step Number Badge */}
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 border border-white/80 shadow-md flex items-center justify-center mb-1.5 sm:mb-2">
-                    <span className="font-sans-flex font-bold text-xs sm:text-sm text-[#182319]">
+                  {/* Step Content */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.08, ease: [0.16, 1, 0.3, 1] }}
+                    className="relative z-10 flex flex-col items-center max-w-xl px-4"
+                  >
+                    {/* Step Number Badge */}
+                    <div className="w-6.5 h-6.5 sm:w-7.5 sm:h-7.5 rounded-full bg-white/95 border border-white/80 shadow-md flex items-center justify-center mb-1 sm:mb-1.5">
+                      <span className="font-sans-flex font-bold text-xs sm:text-[13px] text-[#182319]">
+                        {step.number}
+                      </span>
+                    </div>
+
+                    {/* Active Italic Script Heading */}
+                    <h3 className="font-instrument-serif italic text-white text-[42px] xs:text-[50px] sm:text-[62px] md:text-[72px] lg:text-[78px] font-normal leading-[0.9] drop-shadow-md">
+                      {step.italicWord}
+                    </h3>
+
+                    {/* Active Step Description */}
+                    <p className="font-sans-flex text-white/95 text-[12.5px] sm:text-[13.5px] md:text-[14.5px] max-w-md mt-1.5 sm:mt-2 leading-relaxed font-normal drop-shadow-sm">
+                      {step.description}
+                    </p>
+                  </motion.div>
+                </motion.div>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3, ease: 'easeOut' }}
+                  whileHover={{ y: -3 }}
+                  className="group flex flex-col items-center gap-1 sm:gap-1.5 cursor-pointer select-none py-1 sm:py-1.5"
+                >
+                  {/* Circular Number Badge */}
+                  <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-[#182319]/15 shadow-xs flex items-center justify-center transition-colors duration-200 group-hover:border-[#182319]/50">
+                    <span className="font-sans-flex font-semibold text-xs sm:text-[13px] text-[#555555] group-hover:text-[#182319]">
                       {step.number}
                     </span>
                   </div>
 
-                  {/* Active Script Heading */}
-                  <h3 className="font-instrument-serif italic text-white text-[48px] xs:text-[58px] sm:text-[72px] md:text-[84px] lg:text-[96px] font-normal leading-[0.9] drop-shadow-md">
-                    {step.italicWord}
-                  </h3>
-
-                  {/* Active Step Description */}
-                  <p className="font-sans-flex text-white/95 text-[14px] sm:text-[15px] md:text-[16px] max-w-lg mt-2 sm:mt-3 leading-relaxed font-normal drop-shadow-sm">
-                    {step.description}
-                  </p>
-                </div>
-              </motion.div>
-            );
-          }
-
-          {/* INACTIVE STEP: Circular badge + Giant Editorial Serif Word */}
-          return (
-            <motion.button
-              key={step.number}
-              type="button"
-              layout
-              onClick={() => setActiveStep(step.number)}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.25, ease: 'easeOut' }}
-              className="group flex flex-col items-center gap-1.5 sm:gap-2 cursor-pointer select-none transition-opacity duration-300 hover:opacity-85"
-            >
-              {/* Circular Number Badge */}
-              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white border border-[#182319]/15 shadow-xs flex items-center justify-center transition-colors duration-200 group-hover:border-[#182319]/40">
-                <span className="font-sans-flex font-semibold text-xs sm:text-[13px] text-[#555555] group-hover:text-[#182319]">
-                  {step.number}
-                </span>
-              </div>
-
-              {/* Giant Playfair Serif Word */}
-              <span className="font-playfair text-[#182319] text-[42px] xs:text-[50px] sm:text-[64px] md:text-[76px] lg:text-[84px] font-normal leading-[1] tracking-tight">
-                {step.word}
-              </span>
-            </motion.button>
+                  {/* Giant Playfair Word with Vertical Metallic Gradient & Descender Breathing Room */}
+                  <span className="inline-block overflow-visible font-playfair text-[50px] xs:text-[62px] sm:text-[78px] md:text-[92px] lg:text-[106px] font-normal leading-[1.12] sm:leading-[1.14] tracking-tight bg-gradient-to-b from-[#182319] via-[#2F3830] via-50% to-[#9DA49E] bg-clip-text text-transparent select-none pb-3 sm:pb-4 md:pb-5 -mb-2 sm:-mb-3 group-hover:opacity-90 transition-opacity">
+                    {step.word}
+                  </span>
+                </motion.div>
+              )}
+            </motion.div>
           );
         })}
       </div>
