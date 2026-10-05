@@ -79,7 +79,30 @@ All fonts are **100% self-hosted locally** (50 `.woff2` font files in `public/fo
   - **CREAMY** — Iced Matcha Latte
   - **BRIGHT** — Strawberry Matcha
 
-### 4. 📰 Editorial Responsive Footer
+### 4. 🌿 Everyday Wellness Section
+* Deep matcha green grid texture canvas (`Green_Grid_doxpoc.png`) framed by white margins (`px-2 sm:px-3 md:px-4`).
+* Word-anchored tactile stickers: `CALM IN A CUP` on `good.` and `STEADY, NOT / SPEEDY` on `every day.`.
+* Interactive 2x2 benefit cards (`MORNING ENERGY`, `MIDDAY RESET`, `CALM FOCUS`, `DAILY BALANCE`) with crisp white active states and tactile hover lift.
+* 3-slide touch-swipeable portrait carousel with circular navigation arrows powered by `onPanEnd` with Apple cubic-bezier `[0.16, 1, 0.3, 1]`.
+
+### 5. 🍵 Four Simple Steps Ritual Accordion
+* Hover-activated editorial accordion guiding through the four steps of matcha preparation (`1 scoop`, `2 pour`, `3 whisk`, `4 enjoy`).
+* **Auto-Collapse on Cursor Leave:** All 4 steps return to their clean typographic state when the mouse leaves the section.
+* **Descender Clipping Prevention:** Lowercase `p` in `scoop` and `pour` is fully visible with generous clipping padding (`pb-3 sm:pb-4 md:pb-5`).
+* Panoramic 3:1 cards with high-res photography, italic script headings, and microcopy.
+* Apple-grade Framer Motion `layout` orchestration with `0.55s` ease `[0.16, 1, 0.3, 1]` and GPU acceleration.
+
+### 6. 🌸 Pure By Nature Section
+* Organic bamboo whisk and spilled matcha powder cutout (`Whisk_Matcha_Powder_mefsa2.png`, transparent background) positioned boldly on the left viewport edge with large scale (`max-w-[780px]` to `max-w-[960px]`).
+* Top kicker: 4-petal pink flower icon + `PURE BY NATURE`.
+* Two-line editorial title with 3 word-anchored stickers:
+  - Pink pillow `NOTHING / EXTRA` on `nature,`
+  - Lime ticket `JUST THE / GOOD / STUFF` on `powerful`
+  - Green wave `NATURALLY VIBRANT` beneath `cup.`
+* Bottom row pairing a rounded iced matcha card with an editorial narrative paragraph.
+
+### 7. 📰 Editorial Responsive Footer
+* Panoramic Sakura Matcha editorial banner (`Footer_vgqmsa.png`) integrated with `rounded-xl sm:rounded-2xl md:rounded-[20px]`.
 * Two-column split layout with editorial heading (`matcha, made part of every day.`) and embedded pill newsletter form.
 * Circular pink social links (Instagram, TikTok, Pinterest).
 * Giant anchor typography **`wellness`** with metallic gradient (`from-[#0A0A0A] to-[#959A9F]`):
@@ -109,21 +132,24 @@ Mori-Matcha/
 │   └── Thumbnail.jpg
 ├── src/
 │   ├── components/
-│   │   ├── Navbar.tsx         # Smart floating pill navbar with scroll direction physics
-│   │   ├── Hero.tsx           # Full-bleed hero banner, interactive ritual modal, badge
-│   │   ├── ProductsSection.tsx# Ritual section with fog gradient & word-anchored stickers
-│   │   ├── ProductCard.tsx    # Standalone ritual drink card component with hover lift
-│   │   └── Footer.tsx         # Editorial split footer with dynamic 'wellness' display
+│   │   ├── Navbar.tsx                 # Smart floating pill navbar with scroll direction physics
+│   │   ├── Hero.tsx                   # Full-bleed hero banner, interactive ritual modal, badge
+│   │   ├── ProductsSection.tsx        # Ritual section with fog gradient & word-anchored stickers
+│   │   ├── ProductCard.tsx            # Standalone ritual drink card component with hover lift
+│   │   ├── EverydayWellnessSection.tsx# Grid section with 2x2 cards & touch-swipeable carousel
+│   │   ├── RitualStepsSection.tsx     # Four Simple Steps hover accordion with auto-collapse
+│   │   ├── PureByNatureSection.tsx    # Left-bleed whisk, word stickers & iced matcha card
+│   │   └── Footer.tsx                 # Editorial split footer with Sakura banner & 'wellness'
 │   ├── pages/
-│   │   └── Landing-Page.tsx   # Master page composition
-│   ├── App.tsx                # App root with React Router
-│   ├── fonts.css              # Local @font-face declarations mapping /fonts/...
-│   ├── index.css              # Tailwind v4 imports, custom fonts, scrollbar styles
-│   └── main.tsx               # DOM entry point
-├── AGENTS.md                  # Comprehensive AI agent instructions & technical gotchas
-├── DESIGN.md                  # Complete design system, hex colors, & typography rules
-├── MEMORY.md                  # Architectural decisions ledger & component evolution history
-├── index.html                 # HTML shell with Open Graph / Twitter Card social previews
+│   │   └── Landing-Page.tsx           # Master page composition uniting all 6 sections
+│   ├── App.tsx                        # App root with React Router
+│   ├── fonts.css                      # Local @font-face declarations mapping /fonts/...
+│   ├── index.css                      # Tailwind v4 imports, custom fonts, scrollbar styles
+│   └── main.tsx                       # DOM entry point
+├── AGENTS.md                          # Comprehensive AI agent instructions & technical gotchas
+├── DESIGN.md                          # Complete design system, hex colors, & typography rules
+├── MEMORY.md                          # Architectural decisions ledger & component evolution history
+├── index.html                         # HTML shell with Open Graph / Twitter Card social previews
 ├── package.json
 ├── tsconfig.json
 └── vite.config.ts

@@ -4,6 +4,7 @@ import ProductsSection from '../components/ProductsSection';
 import EverydayWellnessSection from '../components/EverydayWellnessSection';
 import RitualStepsSection from '../components/RitualStepsSection';
 import PureByNatureSection from '../components/PureByNatureSection';
+import BalanceSection from '../components/BalanceSection';
 import Footer from '../components/Footer';
 
 export const LandingPage: React.FC = () => {
@@ -23,6 +24,9 @@ export const LandingPage: React.FC = () => {
 
       {/* Pure By Nature Section */}
       <PureByNatureSection />
+
+      {/* Balance Section */}
+      <BalanceSection />
 
       {/* Footer Section */}
       <Footer />
